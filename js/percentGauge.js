@@ -1,12 +1,18 @@
-// 获取成功率仪表盘配置属性
-function getSuccessGaugeOption(data, color1, color2) {
+/**
+ * 获取百分比仪表盘配置
+ * @param {*} data 数据
+ * @param {*} color1 外圈颜色
+ * @param {*} color2 内圈颜色
+ * @returns 
+ */
+function getPercentGaugeOption(data, color1, color2) {
     return {
         title: {
             text: data + '%',
             x: 'center',
             y: 'center',
             textStyle: {
-                fontSize: 24,
+                fontSize: 48,
                 fontFamily: 'PangMenZhengDao',
                 color: '#65d3ff',
             },
@@ -43,7 +49,7 @@ function getSuccessGaugeOption(data, color1, color2) {
             // 仪表盘
             {
                 type: 'gauge',
-                radius: '100%',
+                radius: '98%',
                 clockwise: true,            // 仪表盘刻度是否是顺时针增长
                 startAngle: '90',
                 endAngle: '-270',
@@ -76,14 +82,12 @@ function getSuccessGaugeOption(data, color1, color2) {
         ],
     };
 }
-// 绘制成功率仪表盘
-function drawVoiceSuccessGauge(data) {
-    let chartDom = document.getElementById('successRate');
-    let option = getSuccessGaugeOption(data, '#2cf0ff', 'rgb(44, 240, 255, .4)');
+// 绘制百分比仪表盘
+function drawPercentGauge(data) {
+    let chartDom = document.getElementById('percentGauge');
+    let option = getPercentGaugeOption(data, '#2cf0ff', 'rgb(44, 240, 255, .4)');
     let chart = echarts.init(chartDom);
     option && chart.setOption(option);
 }
 
-window.onload = () => {
-    drawVoiceSuccessGauge(45);
-}
+drawPercentGauge(45);
