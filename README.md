@@ -1,5 +1,8 @@
 # Echarts
 
+<h6>自适应y轴</h6>
+[自适应y轴](./js/self-adaption-y.js)
+
 <h6>百分比仪表盘</h6>
 [百分比仪表盘](./js/percentGauge.js)
 

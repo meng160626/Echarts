@@ -1,7 +1,6 @@
 /**
  * 获取自适应的Y轴数据
  * @param {*} data 数据源
- * @param {*} count y轴标签数量
  * @param {*} valueField 数据源中值的字段名
  */
 function getSelfAdaptionYData(data, valueField = 'value') {
