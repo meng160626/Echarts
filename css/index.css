@@ -1,0 +1,10 @@
+body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(10, 300px);
+}
+
+@font-face {
+    font-family: PangMenZhengDao;
+    src: url('../fonts/PangMenZhengDao.ttf');
+}
