@@ -130,6 +130,18 @@ function drawPercentPieGauge(data) {
     let option = getPercentPieGaugeOption(46, 'rgba(29, 227, 230, .7)', 'rgba(29, 227, 230, .3)', 'rgba(29, 227, 230, 0)', 'rgba(88, 194, 145, 1)', 'rgba(29, 227, 229, 1)');
     let chart = echarts.init(chartDom);
     option && chart.setOption(option);
+
+    // 设置点击事件 点击dom时，显示提示浮窗
+    chartDom.addEventListener("click", () => {
+        console.log("点击事件");
+        // 这里因为仪表盘的浮窗是添加在指针上的，所以没有指针时，浮窗显示无效
+        // 解决方式：添加一个指针，并且设置为透明色
+        chart.dispatchAction({
+            type: 'showTip',
+            seriesIndex: 2,
+            dataIndex: 0,
+        });
+    });
 }
 
 drawPercentPieGauge();
