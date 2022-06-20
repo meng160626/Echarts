@@ -27,6 +27,9 @@ function getPercentPieGaugeOption(data, color1, color2, color3, color4, color5) 
                 fontWeight: '700',
             }
         },
+        tooltip: {
+            triggerOn: 'none'
+        },
         series: [
             // 外圈边框
             {
@@ -77,6 +80,25 @@ function getPercentPieGaugeOption(data, color1, color2, color3, color4, color5) 
                 endAngle: -270,
                 splitLine: {
                     show: false
+                },
+                // 指针 这里为了动态显示提示浮窗 隐藏了指针
+                pointer: {
+                    show: true,
+                    itemStyle: {
+                        color: 'rgba(0,0,0,0)'
+                    }
+                },
+                // 动态提示浮窗 需要添加data属性
+                data: [
+                    {
+                        value: data,
+                        detail: {
+                            show: false
+                        }
+                    }
+                ],
+                tooltip: {
+                    formatter: () => '成功了' + data + '条'
                 },
                 // 仪表盘的线，颜色值为一个数组
                 axisLine: {
@@ -131,15 +153,19 @@ function drawPercentPieGauge(data) {
     let chart = echarts.init(chartDom);
     option && chart.setOption(option);
 
-    // 设置点击事件 点击dom时，显示提示浮窗
-    chartDom.addEventListener("click", () => {
-        console.log("点击事件");
+    // 设置鼠标进入事件 点击dom时，显示提示浮窗
+    chartDom.addEventListener("mouseenter", () => {
         // 这里因为仪表盘的浮窗是添加在指针上的，所以没有指针时，浮窗显示无效
         // 解决方式：添加一个指针，并且设置为透明色
         chart.dispatchAction({
             type: 'showTip',
             seriesIndex: 2,
             dataIndex: 0,
+        });
+    });
+    chartDom.addEventListener("mouseleave", () => {
+        chart.dispatchAction({
+            type: 'hideTip',
         });
     });
 }

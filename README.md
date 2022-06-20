@@ -1,6 +1,6 @@
 # Echarts
 
-<h6>自适应y轴</h6>
+<h6 id="self-adaption">自适应y轴</h6>
 [自适应y轴](./js/self-adaption-y.js)
 
 <h6>百分比仪表盘</h6>
@@ -11,3 +11,50 @@
 
 <h6>柱状图</h6>
 [柱状图](./js/bar.js)
+
+<h6>立方体柱状图</h6>
+[立方体柱状图](./js/cubeBar.js)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[测试](#self-adaption)
+
