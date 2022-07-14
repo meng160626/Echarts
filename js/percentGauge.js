@@ -82,12 +82,5 @@ function getPercentGaugeOption(data, color1, color2) {
         ],
     };
 }
-// 绘制百分比仪表盘
-function drawPercentGauge(data) {
-    let chartDom = document.getElementById('percentGauge');
-    let option = getPercentGaugeOption(data, '#2cf0ff', 'rgb(44, 240, 255, .4)');
-    let chart = echarts.init(chartDom);
-    option && chart.setOption(option);
-}
 
-drawPercentGauge(45);
+draw('percentGauge', getPercentGaugeOption(45, '#2cf0ff', 'rgb(44, 240, 255, .4)'));

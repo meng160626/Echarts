@@ -1,81 +1,70 @@
-let cubeBarCharts;
-//绘制材料消耗3D柱状图
-function drawCubeBar(dataList) {
-  if (!cubeBarCharts) {
-    cubeBarCharts = echarts.init(document.getElementById('cubeBar'));
-    // 绘制左侧面
-    const CubeLeft = echarts.graphic.extendShape({
-      buildPath: function (ctx, shape) {
-        const xAxisPoint = shape.xAxisPoint;          // 获取x轴坐标点
-        // 计算4个点位置
-        const c0 = [shape.x, shape.y];
-        const c1 = [shape.x - 13, shape.y - 13];
-        const c2 = [xAxisPoint[0] - 13, xAxisPoint[1] - 13];
-        const c3 = [xAxisPoint[0], xAxisPoint[1]];
-        // 用画笔连接四个点
-        ctx.moveTo(c0[0], c0[1]);
-        ctx.lineTo(c1[0], c1[1]);
-        ctx.lineTo(c2[0], c2[1]);
-        ctx.lineTo(c3[0], c3[1]);
-        ctx.closePath();
-      }
-    })
-    // 绘制右侧面
-    const CubeRight = echarts.graphic.extendShape({
-      buildPath: function (ctx, shape) {
-        const xAxisPoint = shape.xAxisPoint
-        const c1 = [shape.x, shape.y]
-        const c2 = [xAxisPoint[0], xAxisPoint[1]]
-        const c3 = [xAxisPoint[0] + 18, xAxisPoint[1] - 9]
-        const c4 = [shape.x + 18, shape.y - 9]
-        ctx.moveTo(c1[0], c1[1]);
-        ctx.lineTo(c2[0], c2[1]);
-        ctx.lineTo(c3[0], c3[1]);
-        ctx.lineTo(c4[0], c4[1]);
-        ctx.closePath();
-      }
-    })
-    // 绘制顶面
-    const CubeTop = echarts.graphic.extendShape({
-      buildPath: function (ctx, shape) {
-        const c1 = [shape.x, shape.y]
-        const c2 = [shape.x + 18, shape.y - 9]
-        const c3 = [shape.x + 5, shape.y - 22]
-        const c4 = [shape.x - 13, shape.y - 13]
-        ctx.moveTo(c1[0], c1[1]);
-        ctx.lineTo(c2[0], c2[1]);
-        ctx.lineTo(c3[0], c3[1]);
-        ctx.lineTo(c4[0], c4[1]);
-        ctx.closePath();
-      }
-    })
-    // 注册三个面图形
-    echarts.graphic.registerShape('CubeLeft', CubeLeft)
-    echarts.graphic.registerShape('CubeRight', CubeRight)
-    echarts.graphic.registerShape('CubeTop', CubeTop)
-  }
-  let nameList = [], valueList = [], max = 0, maxList = [], interval = 0, coefficient = 1;
+const dataList = [
+  { name: '水泥', value: 40 },
+  { name: '钢筋', value: 25 },
+  { name: '沙子', value: 35 },
+  { name: '石粉', value: 30 },
+  { name: '外加剂', value: 4 }
+];
 
-  dataList.forEach(item => {
-    nameList.push(item.name);
-    valueList.push(item.value);
-    if (item.value > max) max = item.value;
-  });
+/**
+ * 获取3D柱状图配置项
+ * @param dataList 
+ */
+function getCubBarOption(dataList) {
+  // 获取自适应的y轴数据
+  let yData = getSelfAdaptionYData(dataList);
 
-  if (max < 25) coefficient = 1;
-  if (max >= 25 && max < 250) coefficient = 5;
-  if (max >= 250 && max < 500) coefficient = 50;
-  if (max >= 500 && max < 2500) coefficient = 100;
-  if (max >= 2500) coefficient = 500;
-  interval = Math.floor(max / 5 / coefficient) * coefficient;
-  if (interval == 0) interval = 1;    //修正
-  let _max = Math.floor(max / interval) * interval + interval;
-
-  for (let i = 0; i < valueList.length; i++) {
-    maxList.push(_max);
-  }
-
-  let option = {
+  // 绘制左侧面
+  const CubeLeft = echarts.graphic.extendShape({
+    buildPath: function (ctx, shape) {
+      const xAxisPoint = shape.xAxisPoint;          // 获取x轴坐标点
+      // 计算4个点位置
+      const c0 = [shape.x, shape.y];
+      const c1 = [shape.x - 13, shape.y - 13];
+      const c2 = [xAxisPoint[0] - 13, xAxisPoint[1] - 13];
+      const c3 = [xAxisPoint[0], xAxisPoint[1]];
+      // 用画笔连接四个点
+      ctx.moveTo(c0[0], c0[1]);
+      ctx.lineTo(c1[0], c1[1]);
+      ctx.lineTo(c2[0], c2[1]);
+      ctx.lineTo(c3[0], c3[1]);
+      ctx.closePath();
+    }
+  })
+  // 绘制右侧面
+  const CubeRight = echarts.graphic.extendShape({
+    buildPath: function (ctx, shape) {
+      const xAxisPoint = shape.xAxisPoint
+      const c1 = [shape.x, shape.y]
+      const c2 = [xAxisPoint[0], xAxisPoint[1]]
+      const c3 = [xAxisPoint[0] + 18, xAxisPoint[1] - 9]
+      const c4 = [shape.x + 18, shape.y - 9]
+      ctx.moveTo(c1[0], c1[1]);
+      ctx.lineTo(c2[0], c2[1]);
+      ctx.lineTo(c3[0], c3[1]);
+      ctx.lineTo(c4[0], c4[1]);
+      ctx.closePath();
+    }
+  })
+  // 绘制顶面
+  const CubeTop = echarts.graphic.extendShape({
+    buildPath: function (ctx, shape) {
+      const c1 = [shape.x, shape.y]
+      const c2 = [shape.x + 18, shape.y - 9]
+      const c3 = [shape.x + 5, shape.y - 22]
+      const c4 = [shape.x - 13, shape.y - 13]
+      ctx.moveTo(c1[0], c1[1]);
+      ctx.lineTo(c2[0], c2[1]);
+      ctx.lineTo(c3[0], c3[1]);
+      ctx.lineTo(c4[0], c4[1]);
+      ctx.closePath();
+    }
+  })
+  // 注册三个面图形
+  echarts.graphic.registerShape('CubeLeft', CubeLeft);
+  echarts.graphic.registerShape('CubeRight', CubeRight);
+  echarts.graphic.registerShape('CubeTop', CubeTop);
+  return {
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -95,7 +84,7 @@ function drawCubeBar(dataList) {
     },
     xAxis: {
       type: 'category',
-      data: nameList,
+      data: dataList.map(item => item.name),
       axisLine: {
         show: true,
         lineStyle: {
@@ -122,8 +111,8 @@ function drawCubeBar(dataList) {
       nameTextStyle: {
         align: 'center'
       },
-      max: _max,
-      interval: interval,
+      max: yData.max,
+      interval: yData.interval,
       type: 'value',
       axisLine: {
         show: false,
@@ -190,8 +179,8 @@ function drawCubeBar(dataList) {
             }]
           }
         },
-        data: maxList
-      }, 
+        data: dataList.map(item => yData.max)
+      },
       // 实际数据柱体
       {
         type: 'custom',
@@ -201,10 +190,10 @@ function drawCubeBar(dataList) {
             offset: 0,
             color: 'rgba(37,170,254,1)'
           },
-            {
-              offset: 0.8,
-              color: 'rgba(37,170,254,0.1)'
-            }
+          {
+            offset: 0.8,
+            color: 'rgba(37,170,254,0.1)'
+          }
           ])
           return {
             type: 'group',
@@ -247,28 +236,18 @@ function drawCubeBar(dataList) {
             }]
           }
         },
-        data: valueList
-      }, 
+        data: dataList.map(item => item.value)
+      },
       // 做一个透明的柱体，用来撑开整个网格的高度
       {
         type: 'bar',
         itemStyle: {
           color: 'transparent',
         },
-        data: maxList
-      }]
-  }
-
-  if (option) {
-    cubeBarCharts.setOption(option);
+        data: dataList.map(item => yData.max)
+      }
+    ]
   }
 }
 
-const dataList = [
-    {name: '水泥', value: 40},
-    {name: '钢筋', value: 25},
-    {name: '沙子', value: 35},
-    {name: '石粉', value: 30},
-    {name: '外加剂', value: 4}
-];
-drawCubeBar(dataList);
+draw('cubeBar', getCubBarOption(dataList));

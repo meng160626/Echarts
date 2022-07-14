@@ -291,15 +291,6 @@ function getBarOption(data) {
         ]
     };
 }
-
-// 绘制柱状图
-function drawBar(data) {
-    let chartDom = document.getElementById('bar');
-    let option = getBarOption(data);
-    let chart = echarts.init(chartDom);
-    option && chart.setOption(option);
-}
-
 let data = [
     {
         name: '柱体',
@@ -309,4 +300,4 @@ let data = [
         value: 9162
     }
 ];
-drawBar(data);
+draw('bar', getBarOption(data));
