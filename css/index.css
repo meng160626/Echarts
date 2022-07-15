@@ -3,7 +3,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(10, 300px);
     gap: 10px;
-    background-color: #80011c;
+    background-color: #111;
 }
 
 body div {
