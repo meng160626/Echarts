@@ -1,6 +1,6 @@
 # Echarts
 
-<h6 id="self-adaption">自适应y轴</h6>
+<h6>自适应y轴</h6>
 [自适应y轴](./js/self-adaption-y.js)
 
 <h6>百分比仪表盘</h6>
@@ -22,48 +22,3 @@
 
 <h6>进度条</h6>
 [进度条](./js/progress.js)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[测试](#self-adaption)
-
