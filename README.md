@@ -16,6 +16,14 @@
 <h6>立方体柱状图</h6>
 [立方体柱状图](./js/cubeBar.js)
 
+<h6>水球图</h6>
+[水球图](./js/liquidFill.js)
+
+
+<h6>进度条</h6>
+[进度条](./js/progress.js)
+
+
 
 
 
